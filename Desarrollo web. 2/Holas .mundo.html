@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mensaje de Motivación</title>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .full-height {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .background-image {
+            background-image: url('Fondo 2.webp'); 
+            background-size: cover;
+            background-position: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 20px;
+            cursor: pointer;
+            animation: heartbeat 1.5s infinite;
+            border: none;
+            background-color: #0f119b;
+            color: white;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .message-box {
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            margin: 200px;
+            color: #000000;
+             text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 40px #ff0000; /* Neon Effect */
+        }
+
+        h1 {
+            font-family: 'Permanent Marker', cursive;
+            color: #fdfbfb; /* Neon Red */
+            text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 40px #ff0000; /* Neon Effect */
+        }
+
+        .side-image {
+            width: 100px; 
+            height: auto;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="mainContent" class="full-height">
+        <img src="gOKU.webp" alt="Side Image" class="side-image hidden"> <!-- Initially hidden image next to button -->
+        <button onclick="showMessage()">Un mensaje especial</button>
+    </div>
+    <script>
+        function showMessage() {
+            var mainContent = document.getElementById('mainContent');
+            var sideImage = document.querySelector('.side-image');
+            mainContent.className = 'full-height background-image'; // Aplica el fondo
+            sideImage.classList.remove('hidden'); // Muestra la imagen lateral
+            mainContent.innerHTML = `
+                <div class="message-box">
+                    <h1 id="line1"></h1>
+                    <h2 id="line2"></h2>
+                </div>
+            `;
+            // Texto a escribir
+            var text1 = "No olvides lo increíble que eres...";
+            var text2 = "¡Sigue adelante, tus esfuerzos valdrán la pena!";
+            typeWriter('line1', text1, 0, function() {
+                typeWriter('line2', text2, 0, null);
+            }); // Escribe secuencialmente cada línea
+        }
+    
+        function typeWriter(elementId, text, index, callback) {
+            var element = document.getElementById(elementId);
+            if (index < text.length) {
+                element.innerHTML += text.charAt(index); // Añade el siguiente caracter al contenido actual
+                setTimeout(function() {
+                    typeWriter(elementId, text, index + 1, callback);
+                }, 100); // Ajusta la velocidad de escritura aquí
+            } else if (callback) {
+                callback(); // Llama al callback cuando termina de escribir la línea
+            }
+        }
+    </script>
+    </body>
+    </html>
