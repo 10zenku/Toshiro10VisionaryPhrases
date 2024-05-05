@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Día de la Madre</title>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(120deg, #07664e, #07664e);
+        }
+        .intro-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .heart-btn {
+            width: 180px;
+            height: 180px;
+            background-color: rgb(245, 7, 46);
+            position: relative;
+            margin: 20px;
+            transform: rotate(-45deg);
+            transition: transform 0.2s;
+            animation: heartbeat 1.5s infinite;
+        }
+        @keyframes heartbeat {
+            0% {
+                transform: scale(1) rotate(-45deg);
+            }
+            50% {
+                transform: scale(1.1) rotate(-45deg);
+            }
+            100% {
+                transform: scale(1) rotate(-45deg);
+            }
+        }
+        .heart-btn:before, .heart-btn:after {
+            content: "";
+            background-color: rgb(245, 7, 46);
+            border-radius: 75%;
+            width: 180px;
+            height: 180px;
+            position: absolute;
+        }
+        .heart-btn:before {
+            top: -90px;
+            left: 0;
+        }
+        .heart-btn:after {
+            left: 90px;
+            top: 0;
+        }
+        .text-box {
+            background-color: #000000;
+            color: rgb(255, 3, 3);
+            font-family: 'Permanent Marker', cursive;
+            border-radius: 8px;
+            font-size: 20px;
+            text-align: center;
+            padding: 15px;
+        }
+        .sunflower-img {
+            width: 100px;
+            height: auto;
+        }
+        .message-page {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+        }
+        .message-container {
+            max-width: 600px;
+            padding: 20px;
+            background: #dce9f0;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(9, 189, 9, 0.425);
+            position: relative;
+            overflow: hidden;
+        }
+        h1 {
+            font-family: 'Permanent Marker', cursive;
+            color: #ff0000; /* Neon Red */
+            text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 40px #ff0000; /* Neon Effect */
+            animation: neonGlow 1.5s infinite alternate;
+        }
+        @keyframes neonGlow {
+            0% { text-shadow: 0 0 5px #ff0000; }
+            100% { text-shadow: 0 0 25px #ff0000, 0 0 50px #ff0000; }
+        }
+        .photo {
+            width: 200px;
+            height: auto;
+            display: none; /* Initially hidden */
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .photos-container {
+            display: flex;
+            margin-top: 20px;
+        }
+        .photo:not(:last-child) {
+            margin-right: 20px;
+        }
+        .photo.small { width: 100px; }
+        .photo.medium { width: 150px; }
+        .photo.large { width: 200px; }
+        audio { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="intro-container" onclick="navigateToMessage()">
+    <div class="heart-btn"></div>
+    <div class="text-box">Presiona aquí...<br>Un mensaje especial para ti</div>
+    <img src="sunflower.jpg" alt="Girasol" class="sunflower-img">
+</div>
+
+<div class="message-page" id="messagePage">
+    <div class="message-container">
+        <h1>¡¡Feliz Día mamá!!</h1>
+        <p id="messageText"></p>
+        <div class="photos-container">
+            <img src="img.jpg" alt="Large Image" class="photo large">
+            <img src="WEBI.jpg" alt="Medium Image" class="photo medium">
+            <img src="WEBII.jpg" alt="Small Image" class="photo small">
+        </div>
+        <audio id="audioMessage" src="message_audio.mp3"></audio>
+    </div>
+</div>
+
+<script>
+function navigateToMessage() {
+    document.querySelector('.intro-container').style.display = 'none';
+    const messagePage = document.getElementById('messagePage');
+    messagePage.style.display = 'flex';
+
+    const message = 'Querida mamá, Hoy quiero tomarme un momento para agradecerte desde lo más profundo de mi corazón por todas las enseñanzas, el amor incondicional y el apoyo constante que has derramado sobre mí cada día. Gracias por ser mi guía, mi mayor inspiración y mi refugio seguro. Prometo seguir esforzándome para ser la mejor versión de mí misma, tanto en mi carrera como en mi vida personal. Con amor y cariño, tu futura economista, Mireya';
+    const textElement = document.getElementById('messageText');
+    const audioElement = document.getElementById('audioMessage');
+
+    // Start audio at the beginning of the text animation
+    audioElement.play();
+
+    let i = 0;
+    function typeWriter() {
+        if (i < message.length) {
+            textElement.textContent += message.charAt(i);
+            i++;
+            setTimeout(typeWriter, 50);
+        } else {
+            document.querySelectorAll('.photo').forEach(photo => photo.style.display = 'block'); // Show the photos after the message
+        }
+    }
+
+    typeWriter();
+}
+</script>
+
+</body>
+</html>
